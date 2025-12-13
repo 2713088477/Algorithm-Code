@@ -1,0 +1,74 @@
+package Exp3;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+import java.util.Scanner;
+import java.util.StringJoiner;
+
+public class Main_A {
+	private static int num;
+	private static int y;
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNextInt()) {
+			num=sc.nextInt();
+			y=sc.nextInt();
+			List<List<Integer>> list=new ArrayList<>();
+			for(int i=0;i<=num;i++) {
+				List<Integer> t=new ArrayList<>();
+				for(int j=0;j<4;j++) {
+					t.add(sc.nextInt());
+				}
+				list.add(t);
+			}
+			f(list);
+			
+		}
+		
+	}
+	public static void f(List<List<Integer>> list) {
+		//dp[i][j]表示前i个用j的空间的最大值
+		int[][] dp=new int[num+1][y+1];
+		int[][] pre=new int[num+1][y+1];
+		for(int i=1;i<=num;i++) {
+			dp[i][0]=dp[i-1][0];
+			List<Integer> tList=list.get(i-1);
+			if(tList.get(0)==0) {
+				dp[i][0]+=tList.get(i);
+			}
+		}
+		for(int i=1;i<=num;i++) {
+			for(int j=1;j<=y;j++) {
+				for(int k=0;k<list.size();k++) {
+					List<Integer> tList=list.get(k);
+					if(j>=tList.get(0)*tList.get(0)) {
+						int tans=dp[i-1][j-tList.get(0)*tList.get(0)]+tList.get(i);
+						if(tans>dp[i][j]) {
+							dp[i][j]=tans;
+							pre[i][j]=tList.get(0);
+						}
+						
+					}
+				}
+			}
+		}
+		System.out.println(dp[num][y]);
+		Deque<Integer> deque = new ArrayDeque<>();
+		int left=y;
+		for(int i=num;i>0;i--) {
+			int select=pre[i][left];
+			deque.addLast(select);;
+			left-=(select*select);
+		}
+		StringJoiner sj=new StringJoiner(",");
+		for(int i=0;i<deque.size();i++) {
+			sj.add(String.valueOf(deque.removeLast()));
+			
+		}
+		System.out.println(sj);
+		
+	}
+
+}

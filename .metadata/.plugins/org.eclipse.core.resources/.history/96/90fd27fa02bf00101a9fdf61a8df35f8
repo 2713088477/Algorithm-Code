@@ -1,0 +1,13 @@
+package dpDay3;
+
+public class SolutionLeetCode516 {
+	//暴力递归
+    public int longestPalindromeSubseq1(String s) {
+        char[] arr=s.toCharArray();
+        
+    }
+    //arr[left,right]中的最长回文串的个数
+    public int findMax1(char[] arr,int left,int right) {
+    	
+    }
+}

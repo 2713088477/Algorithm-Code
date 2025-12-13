@@ -1,0 +1,33 @@
+package Exp5;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Main_FindAns_D {
+	private static int[] nums= {3,4,2};
+	private static int target=12;
+	private static int ans=0;
+	public static void main(String[] args){
+		List<int[]> list=new ArrayList<>();
+		int[] t=new int[3];
+		find(0,0,t,list);
+		System.out.println(ans);
+		
+		
+	}
+	public static void find(int index,int sum,int[] t,List<int[]> list) {
+		if(index==t.length && sum<=target) {
+			ans++;
+			list.add(Arrays.copyOf(t, t.length));
+		}
+		if(index>=t.length) return;
+		if(sum>target) return;
+		
+		for(int i=0;i<=target/nums[index]+1;i++) {
+			t[index]=i;
+			find(index+1,sum+nums[index]*i,t,list);
+		}
+		
+	}
+}

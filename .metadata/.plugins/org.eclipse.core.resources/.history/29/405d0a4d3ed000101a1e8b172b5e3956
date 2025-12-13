@@ -1,0 +1,56 @@
+package Exp5;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Find_MinWeight_E {
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNextInt()) {
+			int needObj=sc.nextInt();
+			int provideNum=sc.nextInt();
+			int maxValue=sc.nextInt();
+			int[][] values=new int[needObj][provideNum];
+			int[][] weights=new int[needObj][provideNum];
+			for(int i=0;i<needObj;i++) {
+				for(int j=0;j<provideNum;j++) {
+					values[i][j]=sc.nextInt();
+				}
+			}for(int i=0;i<needObj;i++) {
+				for(int j=0;j<provideNum;j++) {
+					weights[i][j]=sc.nextInt();
+				}
+			}
+			f(values,weights,maxValue);
+			
+		}
+	}
+	//public static void f(int[][] values,int[][] weight,int leftValue)
+	public static void f(int[][] values,int[][] weight,int maxValue) {
+		int needObj=values.length,provideNum=values[0].length;
+		//dp[i][j]表示前i个物品，在总价值<=maxValue的最轻的重量
+		int[][] dp=new int[needObj+1][maxValue+1];
+		for(int[] t:dp) {
+			Arrays.fill(t, Integer.MAX_VALUE);
+		}
+		//dp[i][j]=dp[i-1][j-提供商给的价值]+提供商给的重量
+		for(int i=0;i<=maxValue;i++) {
+			dp[0][i]=0;
+		}
+		for(int i=1;i<=needObj;i++) {
+			dp[i][0]=Integer.MAX_VALUE/2;//代表不可达
+		}
+		for(int i=1;i<=needObj;i++) {
+			for(int j=1;j<=maxValue;j++) {
+				for(int k=0;k<provideNum;k++) {
+					if(j-values[i-1][k]>=0) {
+						dp[i][j]=Math.min(dp[i][j], dp[i-1][j-values[i-1][k]]+weight[i-1][k]);
+					}
+				}
+			}
+		}
+		System.out.println(dp[needObj][maxValue]);
+		
+		
+	}
+}

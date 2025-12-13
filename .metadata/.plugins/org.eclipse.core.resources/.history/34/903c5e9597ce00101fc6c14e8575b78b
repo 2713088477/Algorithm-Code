@@ -1,0 +1,61 @@
+package Exp5;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Scanner;
+import java.util.StringJoiner;
+
+public class MainA {
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNextInt()) {
+			int k=sc.nextInt(),space=sc.nextInt();
+			int[] value =new int[k];
+			int[] weight=new int[k];
+			for(int i=0;i<k;i++) {
+				value[i]=sc.nextInt();
+			}
+			for(int i=0;i<k;i++) {
+				weight[i]=sc.nextInt();
+			}
+			f1(k,space,value,weight);
+		}
+		
+	
+	}
+	public static void f1(int k,int space,int[] value,int[] weight) {
+		//dp[i][j]表示前i个中利用space能创造的最大价值
+		int[][] dp=new int[k+1][space+1];
+		boolean[][] path=new boolean[k+1][space+1];
+		for(int i=1;i<=k;i++) {
+			for(int j=1;j<=space;j++) {
+				dp[i][j]=dp[i-1][j];
+				if(j-weight[i-1]>=0) {
+					if(dp[i-1][j-weight[i-1]]+value[i-1]>dp[i][j]) {
+						dp[i][j]=dp[i-1][j-weight[i-1]]+value[i-1];
+						path[i][j]=true;
+					}
+				}
+			}
+		}
+		Deque<String> deque=new ArrayDeque();
+		StringJoiner sj=new StringJoiner(",","<",">");
+		int remain=space;
+		for(int i=k;i>0;i--) {
+			if(path[i][remain]) {
+				deque.add("1");
+				remain-=weight[i-1];
+			}else {
+				deque.add("0");
+			}
+		}
+		System.out.println(deque);
+		while(!deque.isEmpty()) {
+			sj.add(deque.removeLast());
+		}
+	
+		System.out.println(dp[k][space]);
+		System.out.println(sj.toString());
+	}
+
+}

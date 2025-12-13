@@ -1,0 +1,2 @@
+eclipse.preferences.version=1
+org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1758540234541" defaultVMConnector\="">\r\n    <vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\r\n        <vm id\="1758540234541" name\="JDK21" path\="C\:\\javaInstall\\JDK21"/>\r\n        <vm id\="C\:\\javaInstall\\JDK17_0_13\\AppData" name\="AppData" path\="C\:\\javaInstall\\JDK17_0_13\\AppData"/>\r\n    </vmType>\r\n</vmSettings>\r\n

@@ -1,0 +1,68 @@
+package Exp2;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main_MiddleNum_C {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		while(sc.hasNextInt()) {
+			int n=sc.nextInt();
+			int[] arr1=new int[n];
+			int[] arr2=new int[n];
+			for(int i=0;i<n;i++) {
+				arr1[i]=sc.nextInt();
+			}
+			for(int i=0;i<n;i++) {
+				arr2[i]=sc.nextInt();
+			}
+//			int index1=0,index2=0;
+//			int last=0,lastlast=0;
+//			for(int i=1;i<=n;i++) {
+//				if(arr1[index1]<arr2[index2]) {
+//					if(i==n) last=arr1[index1];
+//					index1++;
+//				}else {
+//					if(i==n) last=arr2[index2];
+//					index2++;
+//				}
+//			}
+//			if(index1>=n || index2>=n) {
+//				lastlast=index1>=n?arr2[index2]:arr1[index1];
+//			}else {
+//				lastlast=arr2[index2]<arr1[index1]?arr2[index2]:arr1[index1];
+//			}
+//			
+//			int sum=last+lastlast;
+//			if(sum%2==0) {
+//				System.out.println(sum/2);
+//			}else {
+//				System.out.println(sum/2.0);
+//			}
+			int sum=findSum(arr1,arr2);
+			if(sum%2==0) {
+				System.out.println(sum/2);
+			}else {
+				System.out.println(sum/2.0);
+			}
+			
+			
+		}
+		sc.close();
+	}
+	public static int findSum(int[] arr1,int[] arr2) {
+		int n=arr1.length;
+		int[] arr=new int[2*n];
+		int index=0;
+		for(int i=0;i<n;i++) {
+			arr[index++]=arr1[i];
+		}
+		for(int i=0;i<n;i++) {
+			arr[index++]=arr2[i];
+		}
+		Arrays.sort(arr);
+		return arr[n-1]+arr[n];
+	}
+	
+
+}

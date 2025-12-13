@@ -1,0 +1,52 @@
+package VideoZuo32;
+
+public class BitSet {
+	//底层用整形数组来存储,比特位0表示没有,1表示该数存在
+	private int[] arr=null;
+	private int len=0;
+	
+	//构造函数,构建一个可以容纳[0,n-1]的大小
+	public BitSet(int n) {
+		int len=(n+31)/32;//向上取整
+		arr=new int[len];
+		len=n;
+		System.out.println("构造函数:len"+len);
+	}
+	//将num加入到位图中
+	public void add(int num) {
+		if(num<len) {
+			int index=num/32;
+			int bit=num%32;
+			arr[index] |= (1<<bit); 
+		}
+		
+	}
+	//将num从位图中删除
+	public void remove(int num) {
+		if(num<len) {
+			int index=num/32;
+			int bit=num%32;
+			arr[index] &= (~(1<<bit));
+		}
+		
+	}
+	//如果位图里面没有num就加入,否则就删除
+	public void reverse(int num) {
+		if(num<len) {
+			int index=num/32;
+			int bit=num%32;
+			arr[index] ^= (1<<bit);
+		}
+	}
+	//判断num是否在位图中
+	public boolean contains(int num) {
+		if(num<len) {
+			int index=num/32;
+			int bit=num%32;
+			if((arr[index]&(1<<bit))==0)return false;
+			else return true;
+		}
+		return false;
+	}
+
+}

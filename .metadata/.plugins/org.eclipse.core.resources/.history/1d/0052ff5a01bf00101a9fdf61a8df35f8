@@ -1,0 +1,9 @@
+package dpDay3;
+
+public class SolutionLeetCode516 {
+	//暴力递归
+    public int longestPalindromeSubseq1(String s) {
+        char[] arr=s.toCharArray();
+        
+    }
+}

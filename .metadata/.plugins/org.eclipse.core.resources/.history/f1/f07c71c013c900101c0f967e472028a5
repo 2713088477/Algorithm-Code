@@ -1,0 +1,95 @@
+package Exp3;
+
+import java.util.Scanner;
+import java.util.StringJoiner;
+
+public class MainH {
+	static class Obj{
+		int l;
+		int v;
+	}
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNextInt()) {
+			int n=sc.nextInt(),tl=sc.nextInt();
+			Obj[] arr=new Obj[n];
+			for(int i=0;i<n;i++) {
+				arr[i]=new Obj();
+				arr[i].l=sc.nextInt();
+				arr[i].v=sc.nextInt();
+			}
+			//暴力递归
+			//int ans=findMax(arr,0,tl);
+			//System.out.println(ans);
+			
+			
+			//记忆化搜索
+			//int[][] dp =new int[n+1][tl+1];
+			//for(int i=0;i<dp.length;i++) {
+				//Arrays.fill(dp[i], -1);
+			//}
+			//int ans= findMaxWithMemory(arr,0,tl,dp);
+			//System.out.println(ans);
+			
+			//严格位置依赖的动态规划
+			findMaxByPosition(arr,tl);
+			
+		}
+		sc.close();
+	}
+	//从cur开始,利用len的长度的最大长度
+	public static int findMax(Obj[] arr,int cur,int len) {
+		if(len<=0||cur==arr.length) {
+			return 0;
+		}
+		int ans=findMax(arr,cur+1,len);
+		if(arr[cur].l<=len) {
+			ans=Math.max(ans, findMax(arr,cur+1,len-arr[cur].l)+arr[cur].v);
+		}
+		return ans;
+	}
+	//记忆化搜索
+	public static int findMaxWithMemory(Obj[] arr,int cur,int len,int[][] dp) {
+		if(len<=0||cur==arr.length) {
+			return 0;
+		}
+		if(dp[cur][len]!=-1) {
+			return dp[cur][len];
+		}
+		int ans=findMax(arr,cur+1,len);
+		if(arr[cur].l<=len) {
+			ans=Math.max(ans, findMaxWithMemory(arr,cur+1,len-arr[cur].l,dp)+arr[cur].v);
+		}
+		dp[cur][len]=ans;
+		return ans;	
+	}
+	
+	public static void findMaxByPosition(Obj[] arr,int tl) {
+		//dp[x][y]表示以x下标开始利用y的空间能存储的最大价值
+		int[][] dp = new int[arr.length+1][tl+1];
+		for(int index=arr.length-1;index>=0;index--) {
+			for(int l=1;l<=tl;l++) {
+				if(arr[index].l<=l) {
+					dp[index][l]=Math.max(dp[index+1][l-arr[index].l]+arr[index].v, dp[index+1][l]);
+				}else {
+					dp[index][l]=dp[index+1][l];
+				}
+			}
+		}
+		System.out.println(dp[0][tl]);
+		StringJoiner sj = new StringJoiner(",");
+		int total=tl;
+		for(int i=0;i<arr.length;i++) {
+			if(dp[i][total]==dp[i+1][total]) {
+				sj.add("0");
+			}else {
+				sj.add("1");
+				total-=arr[i].l;
+			}
+		}
+		System.out.println(sj.toString());
+		
+		
+	}
+
+}

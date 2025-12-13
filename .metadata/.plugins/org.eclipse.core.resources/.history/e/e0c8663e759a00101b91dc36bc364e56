@@ -1,0 +1,20 @@
+package dpDay2;
+import java.util.HashMap;
+import java.util.Map;
+public class demo1 {
+	public static void main(String[] args) {
+		initMap();
+		System.out.println(map);
+	}
+	public static Map<String,Character> map=new HashMap<>();
+	public static void initMap() {
+		for(int i=1;i<=26;i++) {
+			map.put(String.valueOf(i), Character.valueOf((char)('A'+i-1)));
+		}
+	}
+//    public static int numDecodings(String s) {
+//        initMap();
+//    }
+    
+
+}

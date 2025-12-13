@@ -1,0 +1,58 @@
+package VideoZuo32;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Demo {
+	public static void main(String[] args) {
+		int maxNum=20;
+		int testTime=1;
+		int testNum = 10;
+		System.out.println("测试开始");
+		for(int i=0;i<testTime;i++) {
+			Set<Integer> set=new HashSet<>();
+			BitSet bitSet = new BitSet(maxNum);
+			for(int j=0;j<testNum;j++) {
+				double way =Math.random();
+				int num = (int)(Math.random()*maxNum);
+				if(way<=0.333) {
+					System.out.println("set.add("+num+")");
+					System.out.println("bitSet.add("+num+")");
+					set.add(num);
+					bitSet.add(num);
+					System.out.println("set.contains("+num+")"+set.contains(num));
+					System.out.println("bitSet.contains("+num+")"+bitSet.contains(num));
+				}else if(way<=0.666) {
+					System.out.println("set.remove("+num+")");
+					System.out.println("bitSet.remove("+num+")");
+					set.remove(num);
+					bitSet.remove(num);
+					System.out.println("set.contains("+num+")"+set.contains(num));
+					System.out.println("bitSet.contains("+num+")"+bitSet.contains(num));
+				}else {
+					System.out.println("set.reverse("+num+")");
+					System.out.println("bitSet.revsese("+num+")");
+					if(set.contains(num)) {
+						set.remove(num);
+					}else {
+						set.add(num);
+					}
+					bitSet.reverse(num);
+					System.out.println("set.contains("+num+")"+set.contains(num));
+					System.out.println("bitSet.contains("+num+")"+bitSet.contains(num));
+				}
+			}
+			for(int j=0;j<maxNum;j++) {
+				if(set.contains(j)!=bitSet.contains(j)) {
+					System.out.println("测试失败");
+					System.out.println("set.contains("+j+")"+set.contains(j));
+					System.out.println("set.contains("+j+")"+bitSet.contains(j));
+				}
+			}
+			
+		}
+		System.out.println("测试结束");
+		
+	}
+
+}

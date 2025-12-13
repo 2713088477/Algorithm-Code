@@ -1,0 +1,16 @@
+package VideoZuo31;
+
+public class CountBinaryOne {
+	public static void main(String[] args) {
+		
+	}
+	public static int count(int num) {
+		int ans=0;
+		while(num!=0) {
+			num=num ^ (num&(~num+1));;
+			ans++;
+		}
+		return ans;
+	}
+
+}

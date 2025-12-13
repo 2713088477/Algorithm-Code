@@ -6,18 +6,9 @@ public class SolutionLeetCode5 {
         char[] arr=s.toCharArray();
         
     }
-    public int f(char[] arr,int left,int right) {
-    	if(left==right) return 1;
-    	if(left+1==right) {
-    		return arr[left]==arr[right]?2:0;
-    	}
-    	if(arr[left]==arr[right]) {
-    		int num=f(arr,left+1,right-1);
-    		if(num>0) {
-    			 
-    			
-    		}
-    	}
+    public boolean isCircleString(String s) {
+    	char[] arr=s.toCharArray();
     	
     }
+    
 }

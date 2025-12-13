@@ -1,0 +1,80 @@
+package dpDay3;
+
+public class SolutionLeetCode516 {
+	
+    public int longestPalindromeSubseq(String s) {
+        char[] nums=s.toCharArray();
+        //return findMax(nums,0,nums.length);
+        //return findMaxByPosition(nums);
+        return findMaxByPositionWithlm(nums);
+    }
+    //暴力递归尝试,找出arr[left,right]中最长回文子序列
+    public static int findMax(char[] arr,int left,int right) {
+    	if(left==right) {
+    		return 1;
+    	}
+        if(left+1==right){
+            return arr[left]==arr[right]?2:1;
+        }
+        //System.out.println("right:"+right+" left:"+left);
+    	int ans;
+    	if(arr[left]==arr[right]) {
+    		ans=findMax(arr,left+1,right-1)+2;
+    	}else {
+    		ans=Math.max(findMax(arr,left+1,right),findMax(arr,left,right-1));
+    	}
+    	return ans;
+    }
+    //严格位置依赖的动态规划
+    public static int findMaxByPosition(char[] arr) {
+    	int len=arr.length;
+    	//dp[i][j]表示arr中i到j中的最长回文子序列
+    	int[][] dp=new int[len][len];
+    	for(int i=len-1;i>=0;i--) {
+    		for(int j=i;j<len;j++) {
+    			if(i==j) {
+    				dp[i][j]=1;
+    			}
+    			else if(i+1==j) {
+    				dp[i][j]=(arr[i]==arr[j]?2:1);
+    			}else {
+    				if(arr[i]==arr[j]) {
+        				dp[i][j]=dp[i+1][j-1]+2;
+        			}else {
+        				dp[i][j]=Math.max(dp[i+1][j], dp[i][j-1]);
+        			}
+    			}
+    		}
+    	}
+    	
+    	return dp[0][len-1];
+    }
+    //严格位置依赖的动态规划+空间压缩
+    public static int findMaxByPositionWithlm(char[] arr) {
+    	int len=arr.length;
+    	//dp[i][j]表示arr中i到j中的最长回文子序列
+    	int[] dp=new int[len];
+    	for(int i=len-1;i>=0;i--) {
+    		int leftDown=1;
+    		for(int j=i;j<len;j++) {
+    			int temp=dp[j];
+    			if(i==j) {
+    				dp[j]=1;
+    			}
+    			else if(i+1==j) {
+    				dp[j]=(arr[i]==arr[j]?2:1);
+    			}else {
+    				if(arr[i]==arr[j]) {
+        				dp[j]=leftDown+2;
+        			}else {
+        				dp[j]=Math.max(dp[j], dp[j-1]);
+        			}
+    				
+    			}
+    			leftDown=temp;
+    		}
+    	}
+    	
+    	return dp[len-1];
+    }
+}
