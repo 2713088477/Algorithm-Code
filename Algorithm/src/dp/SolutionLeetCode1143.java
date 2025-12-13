@@ -1,0 +1,22 @@
+package dp;
+
+public class SolutionLeetCode1143 {
+	//暴力尝试
+    public int longestCommonSubsequence1(String text1, String text2) {
+        char[] arr1=text1.toCharArray();
+        char[] arr2=text2.toCharArray();
+        return findMax1(arr1,arr2,arr1.length,arr2.length);
+    }
+    public int findMax1(char[] arr1,char[] arr2,int len1,int len2) {
+    	if(len1==0 ||len2==0) {
+    		return 0;
+    	}
+    	int ans;
+    	if(arr1[len1-1]==arr2[len2-1]) {
+    		ans=findMax1(arr1,arr2,len1-1,len2-1)+1;
+    	}else {
+    		ans=Math.max(findMax1(arr1,arr2,len1-1,len2), findMax1(arr1,arr2,len1,len2-1));
+    	}
+    	return ans;
+    }
+}

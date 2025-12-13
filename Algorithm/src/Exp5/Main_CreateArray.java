@@ -1,0 +1,47 @@
+package Exp5;
+
+import java.util.Scanner;
+
+public class Main_CreateArray {
+	private static int n;
+	private static boolean isOk;
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNextInt()) {
+			n=sc.nextInt();
+			int[][] arr=new int[n][n];
+			isOk=false;
+			f(arr,0,0);
+		}
+	}
+	public static void f(int[][] arr,int x,int y) {
+		if(isOk)return;
+		if(x==0 && y==n) {
+			for(int[] t:arr) {
+				for(int num:t) {
+					System.out.print(num+" ");
+				}
+				System.out.println();
+			}
+			isOk=true;
+			return;
+		}
+		//if(x>=n||y>=n) return;
+		outer:
+		for(int i=1;i<=n;i++) {
+			//查看当前行是否有
+			for(int j=0;j<y;j++) {
+				if(arr[x][j]==i) continue outer;
+			}
+			//查看当前列是否有
+			for(int j=0;j<x;j++) {
+				if(arr[j][y]==i) continue outer;
+			}
+			arr[x][y]=i;
+			if(x==n-1) f(arr,0,y+1);
+			else f(arr,x+1,y);
+			arr[x][y]=0;
+			
+		}
+	}
+}

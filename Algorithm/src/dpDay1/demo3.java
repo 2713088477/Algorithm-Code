@@ -1,0 +1,28 @@
+package dpDay1;
+
+public class demo3 {
+	public static void main(String[] args) {
+		int[] days={1,4,6,7,8,20};
+		int[] costs= {2,7,15};
+		System.out.println(mincostTickets(days,costs));
+	}
+	public static int mincostTickets(int[] days, int[] costs) {
+        return minCost(days,costs,0);
+    }
+	public static int[] arr= {1,7,30};
+	//j是代表days数组的下标
+	public static int minCost(int[] days,int[] costs,int j) {
+		if(j==days.length) {
+			return 0; 
+		}
+		int ans = Integer.MAX_VALUE;
+		for(int i=0;i<costs.length;i++) {
+			int k=j;
+			while(k<days.length&&days[j]+arr[i]>days[k]) {
+				k++;
+			}
+			ans=Math.min(ans, costs[i]+minCost(days,costs,k));
+		}
+		return ans;
+	}
+}

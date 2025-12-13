@@ -1,0 +1,47 @@
+package Exp5;
+
+import java.util.Scanner;
+import java.util.Set;
+import java.util.StringJoiner;
+import java.util.TreeSet;
+
+public class Main_pack_F {
+	static boolean isOk=false;
+	static int n,c1,c2;
+	static int[] arr;
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNextInt()) {
+			n=sc.nextInt();
+			c1=sc.nextInt();
+			c2=sc.nextInt();
+			arr=new int[n];
+			for(int i=0;i<n;i++) {
+				arr[i]=sc.nextInt();
+			}
+			Set<Integer> set=new TreeSet<>();
+			find(0,0,0,set);
+		}
+	}
+	public static void find(int inc1,int inc2,int index,Set<Integer> set) {
+		if(isOk) return;
+		if(index==n) {
+			System.out.println("Yes");
+			StringJoiner sj=new StringJoiner(",");
+			for(Integer num:set) {
+				sj.add(String.valueOf(num));
+			}
+			System.out.println(sj);
+			isOk=true;
+			return;
+		}
+		if(inc1+arr[index]<=c1) {
+			set.add(index+1);
+			find(inc1+arr[index],inc2,index+1,set);
+			set.remove(index+1);
+		}
+		if(inc2+arr[index]<=c2) {
+			find(inc1,inc2+arr[index],index+1,set);
+		}
+	}
+}

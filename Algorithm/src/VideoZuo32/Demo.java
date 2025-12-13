@@ -1,0 +1,46 @@
+package VideoZuo32;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Demo {
+	public static void main(String[] args) {
+		int maxNum=Integer.MAX_VALUE/4;
+		int testTime=10000;
+		int testNum = 1000;
+		System.out.println("测试开始");
+		for(int i=0;i<testTime;i++) {
+			Set<Integer> set=new HashSet<>();
+			BitSet bitSet = new BitSet(maxNum);
+			for(int j=0;j<testNum;j++) {
+				double way =Math.random();
+				int num = (int)(Math.random()*maxNum);
+				if(way<=0.333) {
+					set.add(num);
+					bitSet.add(num);
+				}else if(way<=0.666) {
+					set.remove(num);
+					bitSet.remove(num);
+				}else {
+					if(set.contains(num)) {
+						set.remove(num);
+					}else {
+						set.add(num);
+					}
+					bitSet.reverse(num);
+				}
+			}
+			for(int j=0;j<maxNum;j++) {
+				if(set.contains(j)!=bitSet.contains(j)) {
+					System.out.println("测试失败");
+					System.out.println("set.contains("+j+")"+set.contains(j));
+					System.out.println("set.contains("+j+")"+bitSet.contains(j));
+				}
+			}
+			
+		}
+		System.out.println("测试结束");
+		
+	}
+
+}
