@@ -1,0 +1,35 @@
+package LeetCodeDaily;
+
+import java.util.Arrays;
+
+public class Solution_2147 {
+	private long mod=(long)(1e9)+7l;
+    public int numberOfWays(String corridor) {
+        char[] arr=corridor.toCharArray();
+        int count=0;
+        for(char t:arr) {
+        	if(t=='S')count++;
+        }
+        if(count<2||count%2!=0) return 0;
+        if(count==2) return 1;
+        
+        long ans=1;
+        int n1=-1,n2=-1;
+        for(int i=0;i<arr.length;i++) {
+        	if(arr[i]=='S') {
+        		if(n1==-1) {
+        			n1=i;
+        			if(n2!=-1) {
+        				ans=((ans%mod)*((n1-n2)%mod))%mod;
+        			}
+        		}
+        		else {
+        			n2=i;
+        			n1=-1;
+        		}
+        	}
+        }
+        return (int)ans;
+        
+    }
+}
