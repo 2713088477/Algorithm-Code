@@ -1,0 +1,51 @@
+
+public class VideoZuo33 {
+	public static void main(String[] args) {
+		int n1=-1000,n2=20;
+		System.out.println(plus(n1,n2));
+		System.out.println(minus(n1,n2));
+		System.out.println(multiply(n1,n2));
+		System.out.println(divide(n1,n2));
+	}
+	public static int plus(int n1,int n2) {
+		int ans=0;
+		while(n2!=0) {
+			ans=n1^n2;
+			n2=(n1&n2)<<1;
+			n1=ans;
+		}
+		return ans;
+	}
+	//整数最小值会失效
+	public static int reverse(int n) {
+		return plus(~n,+1);
+	}
+	public static int minus(int n1,int n2) {
+		return plus(n1,reverse(n2));
+	}
+	public static int multiply(int n1,int n2) {
+		int ans=0;
+		while(n2!=0) {
+			if((n2&1)==1) {
+				ans=plus(ans,n1);
+			}
+			n1=n1<<1;
+			n2=n2>>>1;
+		}
+		return ans;
+	}
+	//利用到了reverse,所以整数最小值会失效
+	public static int divide(int n1,int n2) {
+		int x=n1<0?reverse(n1):n1;
+		int y=n2<0?reverse(n2):n2;
+		int ans=0;
+		for(int i=30;i>=0;i--) {
+			if((x>>i)>=y) {
+				ans|=(1<<i);
+				x-=(y<<i);
+			}
+		}
+		return n1<0 ^ n2<0?reverse(ans):ans;
+		
+	}
+}

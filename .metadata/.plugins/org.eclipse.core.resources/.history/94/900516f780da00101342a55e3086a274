@@ -1,0 +1,35 @@
+
+public class VideoZuo33 {
+	public static void main(String[] args) {
+		int n1=10,n2=20;
+		System.out.println(plus(n1,n2));
+		System.out.println(minus(n1,n2));
+		System.out.println(multiply(n1,n2));
+	}
+	public static int plus(int n1,int n2) {
+		int ans=0;
+		int t;
+		while(n2!=0) {
+			t=n1^n2;
+			n2=(n1&n2)<<1;
+			n1=t;
+		}
+		return n1;
+	}
+	//整数最小值会失效
+	public static int reverse(int n) {
+		return plus(~n,+1);
+	}
+	public static int minus(int n1,int n2) {
+		return plus(n1,reverse(n2));
+	}
+	public static int multiply(int n1,int n2) {
+		int ans=0;
+		for(int i=0;i<32;i++) {
+			if(((n2>>>i)&1)==1) {
+				ans=plus(ans,n1<<i);
+			}
+		}
+		return ans;
+	}
+}
