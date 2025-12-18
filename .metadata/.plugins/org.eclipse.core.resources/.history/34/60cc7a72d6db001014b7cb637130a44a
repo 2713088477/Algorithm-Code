@@ -1,0 +1,31 @@
+package VideoZuo38;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class SubAllString {
+    public String[] generatePermutation (String s) {
+        char[] arr=s.toCharArray();
+        StringBuilder sb=new StringBuilder();
+        Set<String> set=new HashSet<>();
+        getSubAllString(arr,0,sb,set);
+        
+        String[] ans=new String[set.size()];
+        int index=0;
+        for(String t:set) {
+        	ans[index++]=t;
+        }
+        return ans;
+        
+    }
+    public static void getSubAllString(char[] arr,int index,StringBuilder sb,Set<String> set) {
+    	if(index==arr.length) {
+    		set.add(sb.toString());
+    		return;
+    	}
+    	getSubAllString(arr,index+1,sb,set);
+    	sb.append(arr[index]);
+    	getSubAllString(arr,index+1,sb,set);
+    	sb.deleteCharAt(sb.length()-1);
+    }
+}
