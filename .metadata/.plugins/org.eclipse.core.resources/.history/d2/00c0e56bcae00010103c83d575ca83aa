@@ -1,0 +1,65 @@
+package VideoZuo38;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class SortStack {
+	public static void main(String[] args) {
+		Deque<Integer> stack=new ArrayDeque();
+		stack.push(2);
+		stack.push(1);
+		stack.push(6);
+		stack.push(8);
+		stack.push(3);
+		stack.push(4);
+		System.out.println(stack);//[4, 3, 8, 6, 1, 2]
+		sort(stack);
+		System.out.println(stack);
+	}
+	public static void sort(Deque<Integer> stack) {
+		int deep=getDeepOfStack(stack);
+		while(deep>0) {
+			int max=getMaxIntOfStack(stack,deep);
+			int times=getMaxTimes(stack,max,deep);
+			goDown(stack,max,times,deep);
+			deep-=times;
+		}
+	}
+	public static int getDeepOfStack(Deque<Integer> stack) {
+		if(stack.isEmpty()) return 0;
+		int top=stack.pop();
+		int deep=getDeepOfStack(stack)+1;
+		stack.push(top);
+		return deep;
+	}
+	public static int getMaxIntOfStack(Deque<Integer> stack,int deep) {
+		if(deep==1) {
+			return stack.peek();
+		}
+		int top=stack.pop();
+		int ans=Math.max(getMaxIntOfStack(stack,deep-1), top);
+		stack.push(top);
+		return ans;
+	}
+	public static int getMaxTimes(Deque<Integer> stack,int max,int deep) {
+		if(deep==0) {
+			return 0;
+		}
+		int top=stack.pop();
+		int ans=getMaxTimes(stack,max,deep-1)+(top==max?1:0);
+		stack.push(top);
+		return ans;
+	}
+	public static void goDown(Deque<Integer> stack,int max,int times,int deep) {
+		if(deep==0) {
+			for(int i=0;i<times;i++) {
+				stack.push(max);
+			}
+			return;
+		}
+		int top=stack.pop();
+		goDown(stack,max,times,deep-1);
+		if(top!=max) stack.push(top);
+	}
+
+}

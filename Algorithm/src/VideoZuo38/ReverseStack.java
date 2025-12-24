@@ -10,6 +10,8 @@ public class ReverseStack {
 		deque.push(2);
 		deque.push(3);
 		System.out.println(deque);//[3, 2, 1]
+		reverseStack(deque);
+		System.out.println(deque);//[1, 2, 3]
 
 	}
 	
@@ -17,8 +19,23 @@ public class ReverseStack {
 		if(stack.isEmpty()) {
 			return;
 		}
-		Integer bottom= stackBottom(stack);
-		reverseStack()
+		Integer bottom= bottomOut(stack);//获取栈低的元素并返回
+		reverseStack(stack);
+		stack.push(bottom);
 	}
+	
+	//移除并返回返回
+	public static Integer bottomOut(Deque<Integer> stack) {
+		Integer top=stack.pop();
+		if(stack.isEmpty()) {
+			return top;
+		}
+		
+		int nextBottom=bottomOut(stack);
+		stack.push(top);
+		return nextBottom;
+		
+	}
+	
 
 }
