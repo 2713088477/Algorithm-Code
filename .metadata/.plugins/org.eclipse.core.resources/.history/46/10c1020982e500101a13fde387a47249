@@ -1,0 +1,41 @@
+package LeetCodeDaily;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Solution_840 {
+	private int count=0;
+	public static void main(String[] args) {
+		Set<Integer> set=new HashSet<>();
+		int[][] arr=new int[3][3];
+	}
+	public void f(int[][] arr,int x,int y,Set<Integer> set) {
+		if(x==3&&y==0) {
+			if(isOk(arr)) {
+				count++;
+				System.out.println("-----开始-----");
+				for(int[] nums:arr) {
+					System.out.println(nums);
+				}
+				System.out.println("-----结束-----");
+			}
+			
+			return;
+		}
+		for(int i=1;i<=9;i++) {
+			if(!set.contains(i)) {
+				arr[x][y]=i;
+				set.add(i);
+				if(y==2) {
+					x+=1;
+					y=0;
+				}else {
+					y++;
+				}
+				f(arr,x,y,set);
+				set.remove(i);
+			}
+		}
+	}
+	
+}

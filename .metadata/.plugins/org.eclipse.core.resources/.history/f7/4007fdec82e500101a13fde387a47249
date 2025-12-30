@@ -1,0 +1,54 @@
+package LeetCodeDaily;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Solution_840 {
+	private static int count=0;
+	public static void main(String[] args) {
+		Set<Integer> set=new HashSet<>();
+		int[][] arr=new int[3][3];
+		f(arr,0,0,set);
+	}
+	public static void f(int[][] arr,int x,int y,Set<Integer> set) {
+		if(x==3&&y==0) {
+			if(isOk(arr)) {
+				count++;
+				System.out.println("-----开始-----");
+				for(int[] nums:arr) {
+					System.out.println(nums);
+				}
+				System.out.println("-----结束-----");
+			}
+			
+			return;
+		}
+		for(int i=1;i<=9;i++) {
+			if(!set.contains(i)) {
+				arr[x][y]=i;
+				set.add(i);
+				if(y==2) {
+					x+=1;
+					y=0;
+				}else {
+					y++;
+				}
+				f(arr,x,y,set);
+				set.remove(i);
+			}
+		}
+	}
+	public static boolean isOk(int[][] arr) {
+		int c1=arr[0][0]+arr[1][0]+arr[2][0];
+		int c2=arr[0][1]+arr[1][1]+arr[2][1];
+		int c3=arr[0][2]+arr[1][2]+arr[2][2];
+		int r1=arr[0][0]+arr[0][1]+arr[0][2];
+		int r2=arr[1][0]+arr[1][1]+arr[1][2];
+		int r3=arr[2][0]+arr[2][1]+arr[2][2];
+		int x1=arr[0][0]+arr[1][1]+arr[2][3];
+		int x2=arr[0][2]+arr[1][1]+arr[2][0];
+		return c1==c2&&c2==c3&&c3==r1&&r1==r2&&r2==r3&&r3==x1&&x1==x2;
+		
+	}
+	
+}
