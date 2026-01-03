@@ -1,0 +1,30 @@
+package LeetCodeDaily;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution_1411 {
+	private static long mod=(long)1E9+7L;
+	private static List<Integer> oneRow=new ArrayList<>();
+    public static int numOfWays(int n) {
+    	int[][] arr=new int[n][3];//用1，2，3代表红，黄，绿
+    	
+        
+    }
+    public static void init() {
+    	for(int i=1;i<=3;i++) {
+    		for(int j=1;j<=3;j++) {
+    			for(int k=1;k<=3;k++) {
+    				if(i!=j && j!=k && i!=k) {
+    					oneRow.addAll(List.of(i,j,k));
+    				}
+    			}
+    		}
+    	}
+    }
+    public static long f(int[][] arr,int x) {
+    	
+    	
+    	
+    }
+}

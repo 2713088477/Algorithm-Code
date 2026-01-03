@@ -1,0 +1,63 @@
+package LeetCodeDaily;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class Solution_1411 {
+	private static long mod=(long)1E9+7L;
+	private static List<List<Integer>> oneRow=new ArrayList<>();
+	
+    public static int numOfWays(int n) {
+    	init();
+    	long[] dp=new long[n+1];
+    	dp[1]=oneRow.size();
+    	Map<List<Integer>,Long> pre=new HashMap<>();
+    	for(List<Integer> t:oneRow) {
+    		pre.put(t, 1L);
+    	}
+    	for(int i=2;i<=n;i++) {
+    		Map<List<Integer>,Long> curRow=new HashMap<>();
+    		Set<Map.Entry<List<Integer>, Long>> preEntry = pre.entrySet();
+    		for(Map.Entry<List<Integer>, Long> entry:preEntry) {
+    			for(List<Integer> onerow:oneRow) {
+    				if(isOk(entry.getKey(),onerow)){
+    					curRow.put(onerow, (curRow.getOrDefault(onerow, 0L)%mod + entry.getValue()%mod)%mod);
+    				}
+    			}
+    		}
+    		long total=0;
+    		for(long count:curRow.values()) {
+    			total= (total%mod + count%mod)%mod;
+    		}
+    		dp[i]=total;
+    		pre=curRow;
+    	}
+        System.out.println(Arrays.toString(dp));
+    	return (int)dp[n];
+    	
+        
+    }
+    public static void init() {
+    	//用1，2，3代表红，黄，绿
+    	for(int i=1;i<=3;i++) {
+    		for(int j=1;j<=3;j++) {
+    			for(int k=1;k<=3;k++) {
+    				if(i!=j && j!=k ) {
+    					oneRow.add(List.of(i,j,k));
+    				}
+    			}
+    		}
+    	}
+    }
+    public static boolean isOk(List<Integer> pre,List<Integer> cur) {
+    	if(pre.get(0)==cur.get(0) || pre.get(1)==cur.get(1) || pre.get(2)!=cur.get(2)) return false;
+    	return true;
+    }
+    public static void main(String[] args) {
+    	numOfWays(5000);
+    }
+}
